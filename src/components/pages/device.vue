@@ -47,7 +47,7 @@ export default {
     },
     methods:{
         registDevice(){
-            http.registDevice(this.child_id)
+            http.registDevice(localStorage.getItem('child_id'))
                 .then((response)=>{
                     console.log(response)
                     this.pin = response.data.pin
