@@ -4,7 +4,7 @@ import "github.com/gin-gonic/gin"
 
 func main() {
 	r := GetRouter()
-	r.Run(":8000")
+	r.Run(":3000")
 }
 
 func GetRouter() *gin.Engine {

@@ -1,16 +1,16 @@
 <template>
     <div>
+        <h1>記録</h1>
         <under-tab :index='1'></under-tab>
     </div>
 </template>
-
 <script>
 import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
 
 export default {
-    name :"dashboad",
+    name :"records",
     components:{
         UnderTab
     },
@@ -19,14 +19,6 @@ export default {
         }
     },
     methods:{
-        
-    },
-    created(){
-        console.log("on create + "+ auth.GetToken())
-        console.log(!auth.GetToken())
-        if(!auth.GetToken()){
-            this.$router.push({ path: '/login' })
-        }
     }
 }
 </script>

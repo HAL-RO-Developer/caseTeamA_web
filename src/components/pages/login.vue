@@ -4,7 +4,6 @@
             <header class="modal-card-head">
                 <p class="modal-card-title">ログイン</p>
             </header>
-            <div v-if="msg">{{msg}}</div>
             <section class="modal-card-body">
                 <b-field label="Name">
                     <b-input
@@ -50,20 +49,21 @@ export default {
             http.signup(this.name, this.password)
             .then((response)=>{
                 console.log(response)
+                signin()
             })
             .catch((err)=>{
-                console.log(err)
+                console.log(err.response)
             });
         },
         signin(){
             http.signin(this.name, this.password)
-            .then(function (response) {
+            .then((response)=> {
                 console.log(response.data.token);   
                 auth.SetToken(response.data.token);
-                window.location.href = '/'            
+                this.$router.push({ path: '/' })        
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((err)=> {
+                console.log(err.response);
             });
         }
     }

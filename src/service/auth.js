@@ -8,6 +8,9 @@ class Auth{
     GetToken(){
         return localStorage.getItem("token")
     }
+    RemoveToken(){
+        localStorage.removeItem("token")
+    }
 }
 var auth = new Auth()
 window.auth = auth
