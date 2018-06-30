@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <header class="modal-card-head">
-            <p class="modal-card-title">デバイス追加</p>
-        </header>
+    <div class="modal-card" style="width: auto">
+        <app-header :title='title'></app-header>
         <section class="modal-card-body">
                 <b-field label="PINコード:">
                     <b-input
@@ -14,12 +12,7 @@
                 </b-field>  
         </section>
         <p class="button is-medium is-primary full-width" type="button" @click="registDevice" >PINコード発行</p>
-        <footer class="modal-card-foot">
-            <div class="buttons is-right">
-                <span class="button">デバイス設定方法</span>
-                <span class="button" @click="$router.go(-1)">戻る</span>
-            </div>
-        </footer>
+        <app-footer></app-footer>
         <under-tab :index='0'></under-tab>
     </div>
 </template>
@@ -28,14 +21,19 @@
 import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
+import AppHeader from '../modules/header.vue'
+import AppFooter from '../modules/footer.vue'
 
 export default {
     name :"device",
     components:{
         UnderTab,
+        AppHeader,
+        AppFooter
     },
     data() {
         return {
+            title: "デバイス追加",
             pin:"",
         }
     },

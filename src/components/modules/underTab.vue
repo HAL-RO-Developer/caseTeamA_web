@@ -50,13 +50,13 @@ export default {
 <style>
   ＃undertab {
     position: relative;
-    padding-bottom: タブバーの高さ分;
+    padding-bottom: 40px;
   }
   .b-tabs {
     position: fixed;
     left: 0;
     bottom: 0;
-    height: タブバーの高さ;
+    height: 40px;
   }
   .b-tabs .tab-content{
       padding: 0;

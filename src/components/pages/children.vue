@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <header class="modal-card-head">
-            <p class="modal-card-title">子ども一覧</p>
-        </header>
+    <div class="modal-card" style="width: auto">
+        <app-header :title='title'></app-header>
         <card v-for="(child, index) in children" 
             :key="index"
             :nickname="child.nickname" 
@@ -10,14 +8,8 @@
             :selected="selected"
             @remove="removeChild"
             @select="select"></card>
-        <div id="fab" @click="isComponentModalActive = true">
-            <b-icon icon="plus"></b-icon>
-        </div>
-        <footer class="modal-card-foot">
-            <div class="buttons  is-right">
-                <span class="button" @click="$router.go(-1)">戻る</span>
-            </div>
-        </footer>
+        <fab :icon="fabIcon" @click="isComponentModalActive = true"></fab>
+        <app-footer></app-footer>
         <under-tab :index='2'></under-tab>
         <b-modal :active.sync="isComponentModalActive" has-modal-card>
             <modal-form @add="addChild"></modal-form>
@@ -29,18 +21,26 @@ import moment from "moment";
 import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
+import AppHeader from '../modules/header.vue'
+import AppFooter from '../modules/footer.vue'
 import Card from '../modules/childCard.vue'
 import ModalForm from '../modules/addChildModal.vue'
+import Fab from '../modules/fab.vue'
 
 export default {
     name :"children",
     components:{
         UnderTab,
+        AppHeader,
+        AppFooter,
         Card,
-        ModalForm
+        ModalForm,
+        Fab
     },
     data() {
         return {
+            title: "子ども一覧",
+            fabIcon: "plus",
             children:[
                 /*
                 {
@@ -80,10 +80,10 @@ export default {
                     console.log(err.response)
                 });
         },
-        removeChild(id){
+        removeChild(id, nickname){
             this.$dialog.confirm({
                 title: '子ども情報削除',
-                message: '削除しますか？',
+                message: '『'+ nickname +'』を削除しますか？',
                 confirmText: '削除',
                 type: 'is-danger',
                 hasIcon: true,
@@ -117,28 +117,5 @@ export default {
 <style>
     .full-width{
         width: 100%;
-    }
-
-    #fab {
-        font-size: 21px;
-        line-height: 55px;
-        text-align: center;
-        color: white;
-        background-color: cyan;
-        width: 55px;
-        height: 55px;
-        position:fixed;
-        right: 10px;
-        bottom: 50px;
-        border-radius: 50%;
-        z-index: 10;
-        box-shadow:0px 3px 10px rgba(0,0,0, 0.3);
-        -webkit-box-shadow: 0px 3px 10px rgba(0,0,0, 0.3);
-    }
-    #fab b-icon{
-        color: white;
-        line-height: 56px;
-        vertical-align: middle;
-        font-size: 18px;
     }
 </style>

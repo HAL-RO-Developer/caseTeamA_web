@@ -1,16 +1,10 @@
 <template>
-    <div>
-        <header class="modal-card-head">
-            <p class="modal-card-title">設定</p>
-        </header>
+    <div class="modal-card" style="width: auto">
+        <app-header :title='title'></app-header>
         <div class="buttons" v-for="(item, index) in menu_items" :key="index">
             <span class="button full-width" @click="click(index)">{{item.title}}</span>
         </div>
-        <footer class="modal-card-foot">
-            <div class="buttons  is-right">
-                <span class="button" @click="$router.go(-1)">戻る</span>
-            </div>
-        </footer>
+        <app-footer></app-footer>
         <under-tab :index='2'></under-tab>
     </div>
 </template>
@@ -18,14 +12,19 @@
 import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
+import AppHeader from '../modules/header.vue'
+import AppFooter from '../modules/footer.vue'
 
 export default {
     name :"settings",
     components:{
-        UnderTab
+        UnderTab,
+        AppHeader,
+        AppFooter
     },
     data() {
         return {
+            title:"設定",
             menu_items: [
                 { title:'子ども一覧' },
                 { title:'メッセージ設定' },

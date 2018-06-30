@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <header class="modal-card-head">
-            <p class="modal-card-title">メッセージ設定</p>
-        </header>        
+   <div class="modal-card" style="width: auto">
+        <app-header :title='title'></app-header>        
         <!--
         <b-field grouped group-multiline>
             <b-select>
@@ -22,12 +20,7 @@
             :message="message.text"
             :conditions="message.conditions"
             ></card>
-        <footer class="modal-card-foot">
-            <button class="button">追加</button>
-            <div class="buttons  is-right">
-                <span class="button" @click="$router.go(-1)">戻る</span>
-            </div>
-        </footer>
+        <app-footer></app-footer>
         <under-tab :index='2'></under-tab>
     </div>
 </template>
@@ -35,16 +28,21 @@
     import auth from '../../service/auth';
     import http from '../../service/service';
     import UnderTab from '../modules/underTab.vue'
+    import AppHeader from '../modules/header.vue'
+    import AppFooter from '../modules/footer.vue'
     import Card from '../modules/messageCard.vue'
 
     export default {
         name :"messages",
         components:{
             UnderTab,
+            AppHeader,
+            AppFooter,
             Card
         },
         data() {
             return {
+                title: "メッセージ設定",
                 messages:[
                     {
                         text: "すごーい",

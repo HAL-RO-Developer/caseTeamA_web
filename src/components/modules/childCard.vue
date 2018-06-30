@@ -29,7 +29,7 @@
         },
         methods:{
             remove(){
-                this.$emit('remove', this.id )
+                this.$emit('remove', this.id, this.nickname )
             },
             select(){
                 this.$emit('select', this.id )
