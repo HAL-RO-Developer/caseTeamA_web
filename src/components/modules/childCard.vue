@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card-content">
+        <div class="card-content" @click="select">
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48">
@@ -11,6 +11,7 @@
                     <p class="title is-4">{{nickname}}</p>
                     <p class="subtitle is-6">ID:{{id}}</p>
                 </div>
+                <b-icon v-if="selected==id" icon="check"></b-icon>
                 <div class="media-right">
                     <button class="button is-danger" @click="remove">削除</button>
                 </div>
@@ -20,24 +21,20 @@
 </template>
 
 <script>
-import http from '../../service/service';
-export default {
-    data() {
-        return {
-        }
-    },
-    methods:{
-        remove(){
-            http.removeChild(this.id)
-                .then((response)=>{
-                    console.log(response)
-                })
-                .catch((err)=>{
-                    console.log(err.response)
-                });
-        }
-    },
-    props:['nickname','id']
-   
-}
+    export default {
+        data() {
+            return {
+                //selected: localStorage.getItem('child_id')
+            }
+        },
+        methods:{
+            remove(){
+                this.$emit('remove', this.id )
+            },
+            select(){
+                this.$emit('select', this.id )
+            }
+        },
+        props:['nickname','id','selected']
+    }
 </script>

@@ -3,7 +3,7 @@
         <header class="modal-card-head">
             <p class="modal-card-title">設定</p>
         </header>
-        <div class="buttons" v-for="(item, index) in menu_items">
+        <div class="buttons" v-for="(item, index) in menu_items" :key="index">
             <span class="button full-width" @click="click(index)">{{item.title}}</span>
         </div>
         <footer class="modal-card-foot">
@@ -35,7 +35,6 @@ export default {
     },
     methods:{
         click(index){
-            console.log(index)
             switch (index) {
                 case 0:
                     this.$router.push({path:"/children"})

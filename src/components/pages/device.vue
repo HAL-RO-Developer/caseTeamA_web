@@ -14,9 +14,9 @@
                 </b-field>  
         </section>
         <p class="button is-medium is-primary full-width" type="button" @click="registDevice" >PINコード発行</p>
-        <description v-bind="description"></description>
         <footer class="modal-card-foot">
-            <div class="buttons  is-right">
+            <div class="buttons is-right">
+                <span class="button">デバイス設定方法</span>
                 <span class="button" @click="$router.go(-1)">戻る</span>
             </div>
         </footer>
@@ -28,32 +28,36 @@
 import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
-import Description from '../modules/description.vue'
 
 export default {
     name :"device",
     components:{
         UnderTab,
-        Description
     },
     data() {
         return {
             pin:"",
-            description:{
-                title: "※デバイス側の設定方法",
-                description: "ほげ"
-            }
         }
     },
     methods:{
         registDevice(){
-            http.registDevice(localStorage.getItem('child_id'))
+            var child_id = localStorage.getItem('child_id')
+            console.log(child_id)
+            http.registDevice(Number(child_id))
                 .then((response)=>{
                     console.log(response)
                     this.pin = response.data.pin
                 })
                 .catch((err)=>{
                     console.log(err.response.data.error)
+                    this.$dialog.alert({
+                        title: 'Error',
+                        message: err.response.data.error,
+                        type: 'is-danger',
+                        hasIcon: true,
+                        icon: 'times-circle',
+                        iconPack: 'fa'
+                    })
                 });
         }
     }

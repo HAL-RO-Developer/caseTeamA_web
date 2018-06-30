@@ -2,7 +2,7 @@ import axios from 'axios'
 import auth from './auth'
 
 const api = axios.create({
-    baseURL: 'https://caseteambserver-riqcctorzo.now.sh', // バックエンドB のURL:port を指定する
+    baseURL: 'https://caseteambserver-skeqoxkijp.now.sh', // バックエンドB のURL:port を指定する
     headers: {
       'ContentType': 'application/json',
       'Authorization': auth.GetToken()
@@ -47,9 +47,7 @@ class Http{
         })
     }
     removeChild(child_id){
-        return  api.delete('/child',{
-            child_id
-        })
+        return  api.delete('/child/'+child_id)
     }
 }
 var http = new Http()
