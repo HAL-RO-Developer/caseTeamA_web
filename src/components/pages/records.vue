@@ -1,8 +1,8 @@
 <template>
     <div class="modal-card" style="width: auto">
         <app-header :title='title'></app-header>
-        <div>
-            <graph :chartData='chartData' :options='options' :width="900" :height="300"></graph>
+        <div class="contents">
+            <graph :chartData='chartData' :options='options' :width="900" :height="500"></graph>
             <button @click="fillData">ランダムデータ入力</button>
         </div>
         <app-footer></app-footer>
@@ -10,7 +10,6 @@
     </div>
 </template>
 <script>
-import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
 import AppHeader from '../modules/header.vue'

@@ -36,7 +36,6 @@
 <script>
 import axios from 'axios'
 import http from '../../service/service'
-import auth from '../../service/auth'
 export default {
     data() {
         return {
@@ -48,22 +47,53 @@ export default {
         signup(){
             http.signup(this.name, this.password)
             .then((response)=>{
-                console.log(response)
                 signin()
             })
             .catch((err)=>{
-                console.log(err.response)
+                if(err){
+                    this.$dialog.alert({
+                        title: 'Error',
+                        message: err.response.data.error,
+                        type: 'is-danger',
+                        hasIcon: true,
+                        icon: 'times-circle',
+                        iconPack: 'fa'
+                    })
+                    switch(err.response.status){
+                        case 401:
+                            http.RemoveToken()
+                            this.$router.push({path:'/'})
+                            break;
+                        default:
+                            break;
+                    }
+                }
             });
         },
         signin(){
             http.signin(this.name, this.password)
-            .then((response)=> {
-                console.log(response.data.token);   
-                auth.SetToken(response.data.token);
-                this.$router.push({ path: '/' })        
+            .then((response)=> { 
+                http.SetToken(response.data.token);
+                this.$router.push({ path: '/' })
             })
             .catch((err)=> {
-                console.log(err.response);
+                if(err){
+                    this.$dialog.alert({
+                        title: 'Error',
+                        message: err.response.data.error,
+                        type: 'is-danger',
+                        hasIcon: true,
+                        icon: 'times-circle',
+                        iconPack: 'fa'
+                    })
+                    switch(err.response.status){
+                        case 401:
+                            this.$router.push({path:'/'})
+                            break;
+                        default:
+                            break;
+                    }
+                }
             });
         }
     }

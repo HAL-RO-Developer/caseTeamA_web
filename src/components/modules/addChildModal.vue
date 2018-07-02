@@ -4,18 +4,6 @@
             <p class="modal-card-title">子ども追加</p>
         </header>
         <section class="modal-card-body">
-            <!--
-            <b-field label="DeviceID">
-                <b-select
-                    v-model="data.device_id"
-                    placeholder="Select a device"
-                    expanded>
-                    <option v-for="option in options" :value="option.value">
-                        {{option.text}}
-                    </option>
-                </b-select>
-            </b-field>
-            -->
             <b-field label="Nickname">
                 <b-input
                     type="text"
@@ -56,12 +44,7 @@
                     nickname: "",
                     birthday: new Date(),
                     sex: 0
-                },
-                options:[
-                    { text: 'One', value: 'A' },
-                    { text: 'Two',  value: 'B' },
-                    { text: 'Three', value: 'C' }
-                ]
+                }
             }
         },
         methods:{

@@ -1,15 +1,16 @@
 <template>
     <div class="modal-card" style="width: auto">
         <app-header :title='title'></app-header>
-        <div class="buttons" v-for="(item, index) in menu_items" :key="index">
-            <span class="button full-width" @click="click(index)">{{item.title}}</span>
+        <div class="contents">
+            <div class="buttons" v-for="(item, index) in menu_items" :key="index">
+                <span class="button full-width" @click="click(index)">{{item.title}}</span>
+            </div>
         </div>
         <app-footer></app-footer>
         <under-tab :index='2'></under-tab>
     </div>
 </template>
 <script>
-import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
 import AppHeader from '../modules/header.vue'
@@ -42,7 +43,7 @@ export default {
                     this.$router.push({path:"/messages"})
                     break;
                 case 2:
-                    auth.RemoveToken()
+                    http.RemoveToken()
                     this.$router.push({path:"/"})
                     break;
                 default:
@@ -54,7 +55,4 @@ export default {
 </script>
 
 <style>
-    .full-width{
-        width: 100%;
-    }
 </style>

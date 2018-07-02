@@ -1,7 +1,7 @@
 <template>
     <div class="modal-card" style="width: auto">
         <app-header :title='title'></app-header>
-        <div>
+        <div class="contents">
             <p>{{date}}</p>
         </div>
         <app-footer></app-footer>
@@ -9,7 +9,6 @@
     </div>
 </template>
 <script>
-import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
 import AppHeader from '../modules/header.vue'

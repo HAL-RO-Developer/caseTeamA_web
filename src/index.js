@@ -10,7 +10,6 @@ import Children from './components/pages/children.vue'
 import Messages from './components/pages/messages.vue'
 import NotFound from './components/pages/notFound.vue'
 import Buefy from 'buefy'
-import UnderTab from './components/modules/underTab.vue'
 import 'buefy/lib/buefy.css'
 
 Vue.use(Buefy)

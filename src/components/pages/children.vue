@@ -1,13 +1,15 @@
 <template>
     <div class="modal-card" style="width: auto">
         <app-header :title='title'></app-header>
-        <card v-for="(child, index) in children" 
-            :key="index"
-            :nickname="child.nickname" 
-            :id="child.child_id"
-            :selected="selected"
-            @remove="removeChild"
-            @select="select"></card>
+        <div class="contents">
+            <card v-for="(child, index) in children" 
+                :key="index"
+                :nickname="child.nickname" 
+                :id="child.child_id"
+                :selected="selected"
+                @remove="removeChild"
+                @select="select"></card>
+            </div>
         <fab :icon="fabIcon" @click="isComponentModalActive = true"></fab>
         <app-footer></app-footer>
         <under-tab :index='2'></under-tab>
@@ -18,7 +20,6 @@
 </template>
 <script>
 import moment from "moment";
-import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
 import AppHeader from '../modules/header.vue'
@@ -65,7 +66,24 @@ export default {
                     this.children = response.data.children
                 })
                 .catch((err)=>{
-                    console.log(err.response)
+                    if(err){
+                        this.$dialog.alert({
+                            title: 'Error',
+                            message: err.response.data.error,
+                            type: 'is-danger',
+                            hasIcon: true,
+                            icon: 'times-circle',
+                            iconPack: 'fa'
+                        })
+                        switch(err.response.status){
+                            case 401:
+                                http.RemoveToken()
+                                this.$router.push({path:'/'})
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 });
         },
         addChild(data){
@@ -77,7 +95,24 @@ export default {
                     this.getChild()
                 })
                 .catch((err)=>{
-                    console.log(err.response)
+                    if(err){
+                        this.$dialog.alert({
+                            title: 'Error',
+                            message: err.response.data.error,
+                            type: 'is-danger',
+                            hasIcon: true,
+                            icon: 'times-circle',
+                            iconPack: 'fa'
+                        })
+                        switch(err.response.status){
+                            case 401:
+                                http.RemoveToken()
+                                this.$router.push({path:'/'})
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 });
         },
         removeChild(id, nickname){
@@ -97,7 +132,24 @@ export default {
                             this.getChild()
                         })
                         .catch((err)=>{
-                            console.log(err.response)
+                            if(err){
+                                this.$dialog.alert({
+                                    title: 'Error',
+                                    message: err.response.data.error,
+                                    type: 'is-danger',
+                                    hasIcon: true,
+                                    icon: 'times-circle',
+                                    iconPack: 'fa'
+                                })
+                                switch(err.response.status){
+                                    case 401:
+                                        http.RemoveToken()
+                                        this.$router.push({path:'/'})
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
                         })
             })
             
@@ -115,7 +167,4 @@ export default {
 </script>
 
 <style>
-    .full-width{
-        width: 100%;
-    }
 </style>

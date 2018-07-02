@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import auth from '../../service/auth';
 import http from '../../service/service';
 import UnderTab from '../modules/underTab.vue'
 
@@ -22,10 +21,10 @@ export default {
         
     },
     created(){
-        console.log("on create + "+ auth.GetToken())
-        console.log(!auth.GetToken())
-        if(!auth.GetToken()){
+        if(!http.GetToken()){
             this.$router.push({ path: '/login' })
+        }else{
+            this.$router.push({ path: '/device' })
         }
     }
 }

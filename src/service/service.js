@@ -1,53 +1,69 @@
 import axios from 'axios'
-import auth from './auth'
-
-const api = axios.create({
-    baseURL: 'https://caseteambserver-skeqoxkijp.now.sh', // バックエンドB のURL:port を指定する
-    headers: {
-      'ContentType': 'application/json',
-      'Authorization': auth.GetToken()
-    },
-    responseType: 'json'  
-  });
 
 class Http{
+    
     constructor(){
+        this.Load()
     }
-    createButton(){
 
+    Load(){
+        this.api = axios.create({
+            baseURL: 'https://caseteambserver-ecfxityefq.now.sh', 
+            headers: {
+              'ContentType': 'application/json',
+              'Authorization': this.GetToken()
+            },
+            responseType: 'json'  
+        })
     }
+
+    SetToken(t){
+        localStorage.setItem("token", t)
+        http.Load();
+    }
+    GetToken(){
+        return localStorage.getItem("token")
+    }
+    RemoveToken(){
+        localStorage.removeItem("token")
+    }
+    
     signin(name, pass){
-        return  api.post('/signin',{
+        return  this.api.post('/signin',{
             name,
             pass
         })
     }
     signup(name, pass){
-        return  api.post('/signup',{
+        return  this.api.post('/signup',{
             name,
             pass
         })
     }
-    createButton(){
-        return api.post('/button')
-    }
+    
     registDevice(child_id){
-        return  api.post('/device',{
+        return  this.api.post('/device',{
             child_id
         })
     }
+    getDevice(){
+        return  this.api.get('/device')
+    }
+    removeDevice(device_id){
+        return  this.api.delete('/device/'+device_id)
+    }
     getChild(){
-        return  api.get('/child')
+        return  this.api.get('/child')
     }
     addChild(nickname, birthday, sex){
-        return  api.post('/child',{
+        return  this.api.post('/child',{
             nickname,
             birthday,
             sex
         })
     }
     removeChild(child_id){
-        return  api.delete('/child/'+child_id)
+        return  this.api.delete('/child/'+child_id)
     }
 }
 var http = new Http()

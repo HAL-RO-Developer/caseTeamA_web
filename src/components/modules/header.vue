@@ -17,8 +17,11 @@ export default {
 
 <style>
     #app-header{
-        position: relative;
+        display: block;
+        position: fixed;
         width: 100%;
         top: 0px;
+        left:0px;
+        margin-bottom: 5%;
     }
 </style>
