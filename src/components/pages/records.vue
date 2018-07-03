@@ -2,10 +2,11 @@
     <div class="modal-card" style="width: auto">
         <app-header :title='title'></app-header>
         <div class="contents">
-            <div>
-                <span class="button is-left">＜</span>
-                <span class="button is-right ">＞</span>
-            </div>
+            <b-field grouped group-multiline>
+                <div class="is-left"><span class="button" @click="prev">＜</span></div>
+                <div class="is-center"><b-input type="text" v-model="values.week_range" readonly></b-input></div>
+                <div class="is-right"><span class="button" @click="next">＞</span></div>
+            </b-field>
             <graph :chartData='chartData' :options='options' :width="900" :height="500"></graph>
         </div>
         <app-footer></app-footer>
@@ -36,6 +37,7 @@ export default {
             records:[],
             values:{
                 week:[],
+                week_range:"",
                 solved:[],
                 collect:[]
             }
@@ -95,7 +97,7 @@ export default {
                 .then((response)=>{
                     var records = response.data.records
                     this.records = records
-                    this.aggregate()
+                    this.aggregate()  
                 })
                 .catch((err)=>{
                     if(err){
@@ -118,32 +120,35 @@ export default {
                     }
                 });
         },
-        aggregate(){
-            var day = moment().day(1)
+        aggregate(day){
+            var m = moment(day).day(1)
             var records = this.records
-            for( var i = 0; i < 7; i++, day.add(1,"day") ){
-                this.values.week[i] = day.format('MM.DD')
+            for( var i = 0; i < 7; i++, m.add(1,"day") ){
+                this.values.week[i] = m.format('MM/DD')
                 this.values.solved[i] = 0
                 this.values.collect[i] = 0
                 records.forEach((record)=>{
-                    if( moment(record.date).isSame(day,'day') ){
+                    if( moment(record.date).isSame(m,'day') ){
                         this.values.solved[i] = Number(record.solved)
                         this.values.collect[i] = Number(record.collect)
                     }
                 })                
             }
+            this.values.week_range = this.values.week[0] + " ~ " + this.values.week[i-1]
             this.fillData()
+        },
+        prev(){
+            this.aggregate(moment(this.values.week[0],'MM/DD').add(-7,'day').toDate())
+        },
+        next(){
+            this.aggregate(moment(this.values.week[0],'MM/DD').add(7,'day').toDate())
         }
     },
     created() {
-        this.getRecords();  
+        this.getRecords()
     }
 }
 </script>
 
 <style>
-    .buttons{
-        display: block;
-        width: auto;
-    }
 </style>
