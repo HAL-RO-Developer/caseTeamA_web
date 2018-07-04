@@ -1,4 +1,4 @@
-<<template>
+<template>
     <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
             <p class="modal-card-title">子ども追加</p>
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-    import http from '../../service/service';
     export default {
         data(){
             return{

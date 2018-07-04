@@ -75,8 +75,8 @@ export default {
                     })
                 })
                 .catch((err)=>{
+                    this.isLoading = false
                     if(err){
-                        this.isLoading = false
                         this.$dialog.alert({
                             title: 'Error',
                             message: err.response.data.error,

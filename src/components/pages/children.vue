@@ -2,6 +2,7 @@
     <div class="modal-card" style="width: auto">
         <app-header :title='title'></app-header>
         <div class="contents">
+            <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="true"></b-loading>
             <card v-for="(child, index) in children" 
                 :key="index"
                 :id="child.child_id"
@@ -43,30 +44,23 @@ export default {
         return {
             title: "子ども一覧",
             fabIcon: "plus",
-            children:[
-                /*
-                {
-                    nickname: "John",
-                    child_id: "1"
-                },
-                {
-                    nickname: "Taro",
-                    child_id: "2"
-                }
-                */
-            ],
+            children: [],
             selected: "",
-            isComponentModalActive: false
+            isComponentModalActive: false,
+            isLoading: false
         }
     },
     methods:{
         getChild(){
+            this.isLoading = true
             http.getChild()
                 .then((response)=>{
                     console.log(response)
+                    this.isLoading = false
                     this.children = response.data.children
                 })
                 .catch((err)=>{
+                    this.isLoading = false
                     if(err){
                         this.$dialog.alert({
                             title: 'Error',

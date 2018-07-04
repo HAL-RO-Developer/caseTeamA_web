@@ -7,7 +7,10 @@
                 <div class="is-center"><b-input type="text" v-model="values.week_range" readonly></b-input></div>
                 <div class="is-right"><span class="button" @click="next">＞</span></div>
             </b-field>
-            <graph :chartData='chartData' :options='options' :width="900" :height="750"></graph>
+            <div style="position:relative;">
+                <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="true"></b-loading>
+                <graph :chartData='chartData' :options='options' :width="900" :height="750"></graph>
+            </div>
         </div>
         <app-footer></app-footer>
         <under-tab :index='1'></under-tab>
@@ -41,41 +44,48 @@ export default {
                 week:[],
                 week_range:"",
                 solved:[],
-                collect:[]
-            }
+                correct:[]
+            },
+            isLoading: false
         }
     },
     methods:{
         fillData () {
-            var bar_data = this.values.solved;
-            var line_data = this.values.collect;
+            var solved_data = this.values.solved
+            var correct_data = this.values.correct
+            var rate_data = this.values.rate
             
             var datasets = [
                 {
                     label: '回答数',
                     type: 'bar',
-                    data: bar_data,
+                    data: solved_data,
                     borderColor: "rgba(254,97,132,0.8)",
                     backgroundColor: "rgba(254,97,132,0.5)",
+                    yAxisID: "count-axis"
                 },
                 {
                     label: '正答数',
                     type: 'line',
-                    data: line_data,
-                    borderColor: "rgba(54,164,235,0.8)",
-                    pointBackgroundColor: "rgba(54,164,235,0.8)",
-                    fill: false
+                    data: correct_data,
+                    borderColor: "rgba(54,164,235,1.0)",
+                    pointBackgroundColor: "rgba(54,164,235,1.0)",
+                    fill: false,
+                    yAxisID: "count-axis"
                 }
             ]
 
             this.chartData = {
                 labels: this.values.week,
                 datasets: datasets                 
-            },
+            }
+
             this.options = {
                 scales:{
                     yAxes:[
                         {
+                            id: "count-axis",
+                            position: "left",
                             ticks:{
                                 min: 0,
                                 max: 30,
@@ -86,9 +96,9 @@ export default {
                 onClick: 
                     (e, el)=>{
                         this.showSolvedList(e, el)
-                    }
-                   
+                    } 
             }
+            this.isLoading = false
         },
         showSolvedList(e,el){
             if (! el || el.length == 0) return;
@@ -96,6 +106,7 @@ export default {
             this.$router.push({path: '/records/date/' + date})
         },
         getRecords(){
+            this.isLoading = true
             http.getRecords(this.child_id,this.filter)
                 .then((response)=>{
                     var records = response.data.records
@@ -103,6 +114,7 @@ export default {
                     this.aggregate()  
                 })
                 .catch((err)=>{
+                    this.isLoading = true
                     if(err){
                         this.$dialog.alert({
                             title: 'Error',
@@ -129,11 +141,11 @@ export default {
             for( var i = 0; i < 7; i++, m.add(1,"day") ){
                 this.values.week[i] = m.format('MM/DD')
                 this.values.solved[i] = 0
-                this.values.collect[i] = 0
+                this.values.correct[i] = 0
                 records.forEach((record)=>{
                     if( moment(record.date).isSame(m,'day') ){
                         this.values.solved[i] = Number(record.solved)
-                        this.values.collect[i] = Number(record.collect)
+                        this.values.correct[i] = Number(record.correct)
                     }
                 })                
             }

@@ -24,18 +24,18 @@
         },
         methods:{
             select(){
-                this.$emit('select', this.id )
+                this.$emit('select')
             }
         },
         
         created(){
             this.icon = ( this.result ) ? {
-                    icon: "circle-outline",
-                    type: "is-info"
-                } : {
-                    icon: "close",
-                    type: "is-danger"
-                }
+                icon: "circle-outline",
+                type: "is-info"
+            } : {
+                icon: "close",
+                type: "is-danger"
+            }
         },
         props:['sentence','result']
     }
