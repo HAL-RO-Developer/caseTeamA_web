@@ -27,7 +27,7 @@ export default {
                     this.$router.push({path:"/device"})
                     break;
                 case 1:
-                    this.$router.push({path:"/records"})
+                    this.$router.push({path:"/records/date"})
                     break;
                 case 2:
                     this.$router.push({path:"/settings"})

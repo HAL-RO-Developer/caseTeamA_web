@@ -7,7 +7,7 @@
                 <div class="is-center"><b-input type="text" v-model="values.week_range" readonly></b-input></div>
                 <div class="is-right"><span class="button" @click="next">＞</span></div>
             </b-field>
-            <graph :chartData='chartData' :options='options' :width="900" :height="500"></graph>
+            <graph :chartData='chartData' :options='options' :width="900" :height="750"></graph>
         </div>
         <app-footer></app-footer>
         <under-tab :index='1'></under-tab>
@@ -32,6 +32,8 @@ export default {
     data() {
         return {
             title: "記録",
+            child_id: "",
+            filter: this.$route.params.filter,
             chartData:{},
             options:{},
             records:[],
@@ -90,10 +92,11 @@ export default {
         },
         showSolvedList(e,el){
             if (! el || el.length == 0) return;
-            this.$router.push({path: '/records/' + el[0]._model.label})
+            var date = moment(el[0]._model.label,"MM/DD").format("MMDD")
+            this.$router.push({path: '/records/date/' + date})
         },
         getRecords(){
-            http.getRecords()
+            http.getRecords(this.child_id,this.filter)
                 .then((response)=>{
                     var records = response.data.records
                     this.records = records
@@ -120,8 +123,8 @@ export default {
                     }
                 });
         },
-        aggregate(day){
-            var m = moment(day).day(1)
+        aggregate(date){
+            var m = moment(date).day(1)
             var records = this.records
             for( var i = 0; i < 7; i++, m.add(1,"day") ){
                 this.values.week[i] = m.format('MM/DD')
@@ -141,10 +144,15 @@ export default {
             this.aggregate(moment(this.values.week[0],'MM/DD').add(-7,'day').toDate())
         },
         next(){
-            this.aggregate(moment(this.values.week[0],'MM/DD').add(7,'day').toDate())
+            var date = moment(this.values.week[0],'MM/DD').add(7,'day')
+            if(date.isBefore(moment())){
+                this.aggregate(date.toDate())
+            }
+            
         }
     },
     created() {
+        this.child_id = localStorage.getItem('child_id')
         this.getRecords()
     }
 }
