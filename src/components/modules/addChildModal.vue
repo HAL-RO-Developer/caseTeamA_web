@@ -4,15 +4,16 @@
             <p class="modal-card-title">子ども追加</p>
         </header>
         <section class="modal-card-body">
-            <b-field label="Nickname">
+            <b-field label="ニックネーム">
                 <b-input
                     type="text"
                     v-model="data.nickname"
                     placeholder="ニックネーム"
+                    icon="account"
                     required>
                 </b-input>
             </b-field>
-            <b-field label="Select a birthday">
+            <b-field label="誕生日">
                 <b-datepicker
                     placeholder="Click to select..."
                     icon="calendar-today"
@@ -20,12 +21,14 @@
                     required>
                 </b-datepicker>
            </b-field>
-           <b-radio v-model="data.sex" native-value=0>
-                男
-            </b-radio>
-            <b-radio v-model="data.sex" native-value=1>
-                女
-            </b-radio>
+           <b-field label="性別">
+                <b-radio v-model="data.sex" native-value=0>
+                    男
+                </b-radio>
+                <b-radio v-model="data.sex" native-value=1>
+                    女
+                </b-radio>
+            </b-field>
         </section>
         <footer class="modal-card-foot">
             <button class="button" type="button" @click="$parent.close()">キャンセル</button>

@@ -5,18 +5,17 @@
         </header>
         <section class="modal-card-body">
             <b-field label="条件:">
-                <b-select placeholder="Select a condition" required expanded>
+                <b-select placeholder="Select a condition" v-model="condition" @blur="change" required expanded>
                     <option
                         v-for="option in options.condition"
-                        v-model="condition"
                         :value="option.id"
                         :key="option.id">
                         {{ option.name }}
                     </option>
                 </b-select>
             </b-field>
-            <b-field label="回数">
-                <b-input type="number" disabled></b-input>
+            <b-field label="回数:">
+                <b-input type="number" min="1" :disabled='count_disabled'></b-input>
             </b-field>
             <b-field label="メッセージ:">
                 <b-input maxlength="140" type="textarea" required></b-input>
@@ -34,6 +33,7 @@
         data(){
             return{
                 condition: null,
+                count_disabled: true,
                 options: {
                     condition:[
                         {id: 1, name: '正解のとき'},
@@ -44,6 +44,16 @@
             }
         },
         methods:{
+            change(){
+                switch(this.condition){
+                    case 3:
+                        this.count_disabled = false
+                        break
+                    default:
+                        this.count_disabled = true
+                        break
+                }
+            },
             add(){
                 
             }
