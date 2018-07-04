@@ -2,28 +2,18 @@
    <div class="modal-card" style="width: auto">
         <app-header :title='title'></app-header>        
         <div class="contents">
-            <!--
-            <b-field grouped group-multiline>
-                <b-select>
-                    <option value="asc">Default sort direction: ASC</option>
-                    <option value="desc">Default sort direction: DESC</option>
-                </b-select>
-                <b-select>
-                    <option value="5">5 per page</option>
-                    <option value="10">10 per page</option>
-                    <option value="15">15 per page</option>
-                    <option value="20">20 per page</option>
-                </b-select>
-            </b-field>
-            -->
             <card v-for="(message, index) in messages" 
                 :key="index"
                 :message="message.text"
                 :conditions="message.conditions"
                 ></card>
         </div>
+        <fab :icon="fabIcon" @click="isComponentModalActive = true"></fab>
         <app-footer></app-footer>
         <under-tab :index='2'></under-tab>
+        <b-modal :active.sync="isComponentModalActive" has-modal-card>
+            <modal-form @add="addMessage"></modal-form>
+        </b-modal>
     </div>
 </template>
 <script>
@@ -32,6 +22,8 @@
     import AppHeader from '../modules/header.vue'
     import AppFooter from '../modules/footer.vue'
     import Card from '../modules/messageCard.vue'
+    import ModalForm from '../modules/addMessageModal.vue'
+    import Fab from '../modules/fab.vue'
 
     export default {
         name :"messages",
@@ -39,11 +31,15 @@
             UnderTab,
             AppHeader,
             AppFooter,
-            Card
+            Card,
+            ModalForm,
+            Fab
         },
         data() {
             return {
                 title: "メッセージ設定",
+                fabIcon: "plus",
+                isComponentModalActive: false,
                 messages:[
                     {
                         text: "すごーい",
@@ -57,6 +53,9 @@
             }
         },
         methods:{
+            addMessage(){
+
+            }
         },
     }
 </script>

@@ -69,7 +69,7 @@ export default {
             modalData:{},
             options: {
                 genre:[
-                    {id: 0, name: '全て'},
+                    {id: null, name: '全て'},
                     {id: 1, name: '算数'},
                     {id: 2, name: '社会'}
                 ]
