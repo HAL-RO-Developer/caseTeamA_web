@@ -4,7 +4,7 @@
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48">
-                        <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                        <b-icon :icon="icon.icon" size="is-large" :type="icon.type"></b-icon>
                     </figure>
                 </div>
                 <div class="media-content">
@@ -24,7 +24,7 @@
     export default {
         data() {
             return {
-                //selected: localStorage.getItem('child_id')
+                icon:{}
             }
         },
         methods:{
@@ -35,6 +35,15 @@
                 this.$emit('select', this.id )
             }
         },
-        props:['nickname','id','selected']
+        created(){
+            this.icon = ( this.sex ) ? {
+                    icon: "gender-female",
+                    type: "is-danger"
+                } : {
+                    icon: "gender-male",
+                    type: "is-info"
+                }
+        },
+        props:['id','nickname','sex','selected']
     }
 </script>

@@ -4,8 +4,9 @@
         <div class="contents">
             <card v-for="(child, index) in children" 
                 :key="index"
-                :nickname="child.nickname" 
                 :id="child.child_id"
+                :nickname="child.nickname" 
+                :sex="child.sex"
                 :selected="selected"
                 @remove="removeChild"
                 @select="select"></card>
@@ -90,7 +91,7 @@ export default {
             this.isComponentModalActive = false
             var birthday = moment(data.birthday)
             console.log(data)
-            http.addChild(data.nickname, birthday.format("YYYY-MM-DD"), Number(data))
+            http.addChild(data.nickname, birthday.format("YYYY-MM-DD"), Number(data.sex))
                 .then((response)=>{
                     this.getChild()
                 })

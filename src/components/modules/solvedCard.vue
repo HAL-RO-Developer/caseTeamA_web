@@ -27,7 +27,7 @@
                 this.$emit('select', this.id )
             }
         },
-        props:['sentence','result'],
+        
         created(){
             this.icon = ( this.result ) ? {
                     icon: "circle-outline",
@@ -36,6 +36,7 @@
                     icon: "close",
                     type: "is-danger"
                 }
-        }
+        },
+        props:['sentence','result']
     }
 </script>

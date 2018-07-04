@@ -13,6 +13,7 @@
             </section>
             <div class="subtitle is-5">【デバイスリスト】：{{devices.nickname}}</div>
             <div class="scroll">
+                <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="true"></b-loading>
                 <card v-for="(device, index) in devices.child_devices" 
                     :key="index"
                     :deviceId="device"
@@ -49,7 +50,8 @@ export default {
             child_id: "",
             pin: "",
             devices: {},
-            fabIcon: "sync"
+            fabIcon: "sync",
+            isLoading: false,
         }
     },
     methods:{
@@ -57,12 +59,14 @@ export default {
             this.$dialog.alert({
                 title: 'PINコード',
                 message: this.pin,
-                confirmText: 'OK'
+                confirmText: 'OK',
             })
         },
         getDevice(){
+            this.isLoading = true
             http.getDevice()
                 .then((response)=>{
+                    this.isLoading = false
                     var devices = response.data.devices
                     devices.forEach((device)=>{
                         if(device.child_id == this.child_id){
@@ -72,6 +76,7 @@ export default {
                 })
                 .catch((err)=>{
                     if(err){
+                        this.isLoading = false
                         this.$dialog.alert({
                             title: 'Error',
                             message: err.response.data.error,
@@ -167,6 +172,7 @@ export default {
         display: block;
     }
     .scroll{
+        position: relative;
         overflow: auto;
         height: 200px;
     }

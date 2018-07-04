@@ -20,10 +20,10 @@
                     required>
                 </b-datepicker>
            </b-field>
-           <b-radio v-model="data.sex" native-value = 0>
+           <b-radio v-model="data.sex" native-value=0>
                 男
             </b-radio>
-            <b-radio v-model="data.sex" native-value = 1>
+            <b-radio v-model="data.sex" native-value=1>
                 女
             </b-radio>
         </section>
