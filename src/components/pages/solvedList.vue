@@ -12,7 +12,7 @@
                 </div>
             </div>
             <b-field>
-                <b-select placeholder="Select a genre" v-model="genre" @blur="getDetail(child_id,date,genre)" expanded>
+                <b-select placeholder="Select a genre" v-model="genre" @input="getDetail(child_id,date,genre)" expanded>
                     <option
                         v-for="option in options.genre"
                         :value="option.id"

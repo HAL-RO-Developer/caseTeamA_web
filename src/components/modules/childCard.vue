@@ -13,7 +13,9 @@
                 </div>
                 <b-icon v-if="selected==id" icon="check"></b-icon>
                 <div class="media-right">
-                    <button class="button is-danger" @click="remove">削除</button>
+                    <button class="button is-danger" @click="remove">
+                        <b-icon icon="delete"></b-icon>
+                    </button>
                 </div>
             </div>
         </div>

@@ -11,13 +11,14 @@
                 :selected="selected"
                 @remove="removeChild"
                 @select="select"></card>
-            </div>
+        </div>
         <fab :icon="fabIcon" @click="isComponentModalActive = true"></fab>
         <app-footer></app-footer>
         <under-tab :index='2'></under-tab>
         <b-modal :active.sync="isComponentModalActive" has-modal-card>
             <modal-form @add="addChild"></modal-form>
         </b-modal>
+        
     </div>
 </template>
 <script>

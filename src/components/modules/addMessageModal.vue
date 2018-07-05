@@ -5,7 +5,7 @@
         </header>
         <section class="modal-card-body">
             <b-field label="条件:">
-                <b-select placeholder="Select a condition" v-model="condition" @blur="change" required expanded>
+                <b-select placeholder="Select a condition" v-model="data.condition" @input="change" required expanded>
                     <option
                         v-for="option in options.condition"
                         :value="option.id"
@@ -15,10 +15,10 @@
                 </b-select>
             </b-field>
             <b-field label="回数:">
-                <b-input type="number" min="1" :disabled='count_disabled'></b-input>
+                <b-input type="number" v-model="data.message_call" min="1" :disabled='count_disabled'></b-input>
             </b-field>
             <b-field label="メッセージ:">
-                <b-input maxlength="140" type="textarea" required></b-input>
+                <b-input maxlength="140" type="textarea" v-model="data.message" required></b-input>
             </b-field>
         </section>
         <footer class="modal-card-foot">
@@ -32,8 +32,12 @@
     export default {
         data(){
             return{
-                condition: null,
                 count_disabled: true,
+                data:{
+                    condition: null,
+                    message_call: null,
+                    message: ""
+                },
                 options: {
                     condition:[
                         {id: 1, name: '正解のとき'},
@@ -45,7 +49,7 @@
         },
         methods:{
             change(){
-                switch(this.condition){
+                switch(this.data.condition){
                     case 3:
                         this.count_disabled = false
                         break
@@ -55,11 +59,10 @@
                 }
             },
             add(){
-                
+                this.$emit('add', this.data)
             }
         },
         created() {
         },
-        props:['detail']
     }
 </script>

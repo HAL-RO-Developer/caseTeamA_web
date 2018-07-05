@@ -2,10 +2,13 @@
    <div class="modal-card" style="width: auto">
         <app-header :title='title'></app-header>        
         <div class="contents">
-            <card v-for="(message, index) in messages" 
+            <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="true"></b-loading>
+            <card v-for="(message, index) in messages.child_messages" 
                 :key="index"
-                :message="message.text"
-                :conditions="message.conditions"
+                :condition="message.condition"
+                :message-call="messages.message_call"
+                :messages="message.messages"
+                @remove="removeMessage"
                 ></card>
         </div>
         <fab :icon="fabIcon" @click="isComponentModalActive = true"></fab>
@@ -38,25 +41,115 @@
         data() {
             return {
                 title: "メッセージ設定",
+                child_id: "",
                 fabIcon: "plus",
                 isComponentModalActive: false,
-                messages:[
-                    {
-                        text: "すごーい",
-                        conditions: "1問正解"
-                    },
-                    {
-                        text: "半端ないって",
-                        conditions: "100問連続不正解"
-                    }
-                ]
+                isLoading: false,
+                messages:[]
             }
         },
         methods:{
-            addMessage(){
-
+            addMessage(data){
+                this.isComponentModalActive = false
+                http.addMessage(Number(this.child_id), Number(data.condition), Number(data.message_call), data.message )
+                    .then((response)=>{
+                        console.log(response)
+                        this.getMessage()
+                    })
+                    .catch((err)=>{
+                        if(err){
+                            this.$dialog.alert({
+                                title: 'Error',
+                                message: err.response.data.error,
+                                type: 'is-danger',
+                                hasIcon: true,
+                                icon: 'times-circle',
+                                iconPack: 'fa'
+                            })
+                            switch(err.response.status){
+                                case 401:
+                                    http.RemoveToken()
+                                    this.$router.push({path:'/'})
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+            },
+            getMessage(){
+                this.isLoading = true
+                http.getMessage(this.child_id)
+                    .then((response)=>{
+                        this.isLoading = false
+                        this.messages = response.data.messages
+                        console.log("messages")
+                        console.log(this.messages)
+                        console.log("messages.child_messages")
+                        console.log(this.messages.child_messages)
+                    })
+                    .catch((err)=>{
+                        this.isLoading = false
+                        if(err){
+                            this.$dialog.alert({
+                                title: 'Error',
+                                message: err.response.data.error,
+                                type: 'is-danger',
+                                hasIcon: true,
+                                icon: 'times-circle',
+                                iconPack: 'fa'
+                            })
+                            switch(err.response.status){
+                                case 401:
+                                    http.RemoveToken()
+                                    this.$router.push({path:'/'})
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+            },
+            removeMessage(id){
+                this.$dialog.confirm({
+                title: 'メッセージ削除',
+                message: '『'+ id +'』を削除しますか？',
+                confirmText: '削除',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () => 
+                    http.removeMessage(id)
+                        .then((response)=>{
+                            console.log('delete')
+                            this.getMessage()
+                        })
+                        .catch((err)=>{
+                            if(err){
+                                this.$dialog.alert({
+                                    title: 'Error',
+                                    message: err.response.data.error,
+                                    type: 'is-danger',
+                                    hasIcon: true,
+                                    icon: 'times-circle',
+                                    iconPack: 'fa'
+                                })
+                                switch(err.response.status){
+                                    case 401:
+                                        http.RemoveToken()
+                                        this.$router.push({path:'/'})
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        })
+                })
             }
         },
+        created(){
+            this.child_id = localStorage.getItem('child_id')
+            this.getMessage()
+        }
     }
 </script>
 

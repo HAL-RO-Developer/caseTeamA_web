@@ -2,8 +2,8 @@
     <div class="modal-card" style="width: auto">
         <app-header :title='title'></app-header>
         <div class="contents">
-            <div class="buttons" v-for="(item, index) in menu_items" :key="index">
-                <span class="button full-width" @click="click(index)">{{item.title}}</span>
+            <div class="buttons" v-for="item in menu_items" :key="item.id">
+                <span class="button full-width" @click="click(item.id)">{{item.title}}</span>
             </div>
         </div>
         <app-footer></app-footer>
@@ -27,26 +27,28 @@ export default {
         return {
             title:"設定",
             menu_items: [
-                { title:'子ども一覧' },
-                { title:'メッセージ設定' },
-                { title:'ログアウト' }
+                { id:1, title:'子ども一覧' },
+                { id:2, title:'メッセージ設定' },
+                { id:3, title: '取扱説明書'},
+                { id:4, title:'ログアウト' }
             ]
         }
     },
     methods:{
-        click(index){
-            switch (index) {
-                case 0:
+        click(id){
+            switch (id) {
+                case 1:
                     this.$router.push({path:"/children"})
                     break;
-                case 1:
+                case 2:
                     this.$router.push({path:"/messages"})
                     break;
-                case 2:
-                    http.RemoveToken()
-                    this.$router.push({path:"/"})
+                case 3:
+                    this.$router.push({path:"/manual"})
                     break;
                 default:
+                    http.RemoveToken()
+                    this.$router.push({path:"/"})
                     break;
             }
         }

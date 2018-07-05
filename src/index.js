@@ -8,6 +8,7 @@ import SolvedList from './components/pages/solvedList.vue'
 import Settings from './components/pages/settings.vue'
 import Children from './components/pages/children.vue'
 import Messages from './components/pages/messages.vue'
+import Manual from './components/pages/Manual.vue'
 import NotFound from './components/pages/notFound.vue'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
@@ -24,6 +25,7 @@ const routes = [
     { path: "/settings", component: Settings }, 
     { path: "/children", component: Children },
     { path: "/messages", component: Messages },
+    { path: "/manual", component: Manual },
     { path: "*", component: NotFound },
 ]
 const router = new VueRouter({  mode: 'history', routes })

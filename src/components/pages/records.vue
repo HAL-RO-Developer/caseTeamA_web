@@ -12,6 +12,7 @@
                 <graph :chartData='chartData' :options='options' :width="900" :height="750"></graph>
             </div>
         </div>
+        <fab :icon="fabIcon" @click="getRecords"></fab>
         <app-footer></app-footer>
         <under-tab :index='1'></under-tab>
     </div>
@@ -23,6 +24,7 @@ import UnderTab from '../modules/underTab.vue'
 import AppHeader from '../modules/header.vue'
 import AppFooter from '../modules/footer.vue'
 import Graph from '../modules/graph.vue'
+import Fab from '../modules/fab.vue'
 
 export default {
     name :"records",
@@ -30,7 +32,8 @@ export default {
         UnderTab,
         AppHeader,
         AppFooter,
-        Graph
+        Graph,
+        Fab
     },
     data() {
         return {
@@ -46,7 +49,8 @@ export default {
                 solved:[],
                 correct:[]
             },
-            isLoading: false
+            isLoading: false,
+            fabIcon: "sync",
         }
     },
     methods:{
@@ -109,6 +113,7 @@ export default {
             this.isLoading = true
             http.getRecords(this.child_id,this.filter)
                 .then((response)=>{
+                    console.log(response)
                     var records = response.data.records
                     this.records = records
                     this.aggregate()  

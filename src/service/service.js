@@ -8,7 +8,7 @@ class Http{
 
     Load(){
         this.api = axios.create({
-            baseURL: 'https://caseteambserver-aclennyyad.now.sh', 
+            baseURL: 'https://caseteambserver-qgkloqwugs.now.sh', 
             headers: {
               'ContentType': 'application/json',
               'Authorization': this.GetToken()
@@ -66,14 +66,12 @@ class Http{
         return  this.api.delete('/child/'+child_id)
     }
     getRecords(child_id, filter){
-        /*
-        return  this.api.get('/work/record/'+child_id,{
+        return  this.api.get('/work/graph/'+child_id,{
             params:{
                 filter
             }
         })
-        */
-       
+       /*
         return new Promise((res, rej)=>{
             var response = {
                     data:{
@@ -124,18 +122,17 @@ class Http{
                     }
             }
             res(response)
-        });
-       
+        })
+        */
     }
     getDetail(child_id, date, genre){
-        /*
-        return  this.api.delete('/work/record/detail/'+child_id,{
-            prams:{
+        return  this.api.get('/work/detail/'+child_id,{
+            params:{
                 date,
                 genre
             }
         })
-        */
+        /*
         return new Promise((res, rej)=>{
             var response ={
                 data:{
@@ -166,7 +163,22 @@ class Http{
                 }
             }
             res(response)
-        });
+        })
+        */
+    }
+    addMessage(child_id, condition, message_call, message ){
+        return  this.api.post('/work/message',{
+            child_id,
+            condition,
+            message_call,
+            message
+        })
+    }
+    getMessage(child_id){
+        return  this.api.get('/work/message/'+child_id)
+    }
+    removeMessage(child_id, message_id){
+
     }
 }
 var http = new Http()

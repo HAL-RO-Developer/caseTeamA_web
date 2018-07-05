@@ -2,7 +2,7 @@
     <b-collapse class="card">
             <div slot="trigger" slot-scope="props" class="card-header">
                 <p class="card-header-title">
-                    {{conditions}}
+                    {{condition}}
                 </p>
                 <a class="card-header-icon">
                     <b-icon
@@ -10,16 +10,18 @@
                     </b-icon>
                 </a>
             </div>
-            <div class="card-content">
+            <div  v-for="(message,index) in messages" :key="index" class="card-content">
                 <div class="media">
                     <div class="media-content">
-                        <p class="subtitle is-6">{{message}}</p>
+                        <p class="subtitle is-6">{{message.message}}</p>
                     </div>
                     <div class="media-right">
+                        <!--
                         <button class="button is-info" @click="edit">
                             <b-icon icon="pencil"></b-icon>
                         </button>
-                        <button class="button is-danger" @click="remove">
+                        -->
+                        <button class="button is-danger" @click="remove(message.message_id)">
                             <b-icon icon="delete"></b-icon>
                         </button>
                     </div>
@@ -32,12 +34,21 @@
     export default {
         data() {
             return {
+                options: {
+                    condition:[
+                        {id: 1, name: '正解のとき'},
+                        {id: 2, name: '不正解のとき'},
+                        {id: 3, name: '連続正解のとき'},
+                    ]
+                }
             }
         },
         methods:{
             edit(){},
-            remove(){}
+            remove(){
+                this.$emit('remove', this.id )
+            }
         },
-        props:['message','conditions']
+        props:['condition', 'message-call','messages']
     }
 </script>
