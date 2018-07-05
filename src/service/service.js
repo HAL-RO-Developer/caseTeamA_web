@@ -8,7 +8,7 @@ class Http{
 
     Load(){
         this.api = axios.create({
-            baseURL: 'https://caseteambserver-qgkloqwugs.now.sh', 
+            baseURL: 'https://caseteamaserver-mohaomsbmw.now.sh', 
             headers: {
               'ContentType': 'application/json',
               'Authorization': this.GetToken()
@@ -177,8 +177,8 @@ class Http{
     getMessage(child_id){
         return  this.api.get('/work/message/'+child_id)
     }
-    removeMessage(child_id, message_id){
-
+    removeMessage(message_id){
+        return  this.api.delete('/work/message/'+message_id)
     }
 }
 var http = new Http()
