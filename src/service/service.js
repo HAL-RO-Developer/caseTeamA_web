@@ -66,12 +66,14 @@ class Http{
         return  this.api.delete('/child/'+child_id)
     }
     getRecords(child_id, filter){
+        /*
         return  this.api.get('/work/graph/'+child_id,{
             params:{
                 filter
             }
         })
-       /*
+        */
+       
         return new Promise((res, rej)=>{
             var response = {
                     data:{
@@ -123,7 +125,7 @@ class Http{
             }
             res(response)
         })
-        */
+        
     }
     getDetail(child_id, date, genre){
         return  this.api.get('/work/detail/'+child_id,{
