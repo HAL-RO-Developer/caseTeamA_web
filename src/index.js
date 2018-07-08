@@ -20,7 +20,7 @@ const routes = [
     { path: "/", component: dashboad },
     { path: "/login" , component: Login },
     { path: "/device", component: Device },
-    { path: "/records/:filter", component: Records },
+    { path: "/records", component: Records },
     { path: "/records/date/:date", component: SolvedList },
     { path: "/settings", component: Settings }, 
     { path: "/children", component: Children },

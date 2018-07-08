@@ -23,7 +23,6 @@ export default {
                 solved:[],
                 correct:[]
             },
-            isLoading: false,
         }
     },
     methods:{
@@ -70,7 +69,7 @@ export default {
                     ],
                 },
             }
-            this.isLoading = false
+            this.$emit('isLoading')
         },
         aggregate(date){
             this.fillData()
@@ -80,7 +79,7 @@ export default {
         this.child_id = localStorage.getItem('child_id')
         this.aggregate()
     },
-    props: ['records']
+    props: ['records',"isLoading"]
 }
 </script>
 

@@ -32,7 +32,6 @@ export default {
                 solved:[],
                 correct:[]
             },
-            isLoading: false,
         }
     },
     methods:{
@@ -83,7 +82,8 @@ export default {
                         this.showSolvedList(e, el)
                     } 
             }
-            this.isLoading = false
+            //this.isLoading = false
+            this.$emit('isLoading')
         },
         showSolvedList(e,el){
             if (! el || el.length == 0) return;
@@ -121,7 +121,7 @@ export default {
         this.child_id = localStorage.getItem('child_id')
         this.aggregate()
     },
-    props: ['records']
+    props: ['records',"isLoading"]
 }
 </script>
 

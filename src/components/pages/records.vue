@@ -3,12 +3,12 @@
         <app-header :title='title'></app-header>
         <div class="contents">
             <b-field>
-                <b-select placeholder="Select a filter" v-model="filter"> 
+                <b-select placeholder="Select a filter" v-model="filter" @input="getRecords"> 
                     <option v-for="option in options.filter" :key="option.value" :value="option.value">{{option.name}}</option>
                 </b-select>
             </b-field>
-            <by-date v-if="filter=='date'" :records="records"></by-date>
-            <by-genre v-if="filter=='genre'"></by-genre>
+            <by-date v-if="filter=='date'" :records="records" :isLoading="isLoading" @isLoading="isLoading=false"></by-date>
+            <by-genre v-if="filter=='genre'" :isLoading="isLoading" @isLoading="isLoading=false"></by-genre>
         </div>
         <fab :icon="fabIcon" @click="getRecords"></fab>    
         <app-footer></app-footer>
@@ -38,8 +38,7 @@ export default {
         return {
             title: "記録",
             child_id: "",
-            filter: this.$route.params.filter,
-            //filter: 'genre',
+            filter: "date",
             records: [],
             fabIcon: "sync",
             options:{
@@ -47,7 +46,8 @@ export default {
                     {name: '日付別', value: 'date'},
                     {name: '分野別', value: 'genre'}
                 ]
-            }
+            },
+            isLoading: false
         }
     },
     methods:{
@@ -55,12 +55,13 @@ export default {
             this.isLoading = true
             http.getRecords(this.child_id,this.filter)
                 .then((response)=>{
+                    this.isLoading = false
                     console.log(response)
                     var records = response.data.records
                     this.records = records
                 })
                 .catch((err)=>{
-                    this.isLoading = true
+                    this.isLoading = false
                     if(err){
                         this.$dialog.alert({
                             title: 'Error',
