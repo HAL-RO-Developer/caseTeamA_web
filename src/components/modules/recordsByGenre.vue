@@ -26,15 +26,18 @@ export default {
                     {id: 4, name: '社会'},
                 ],
                 solved:[],
-                correct:[]
+                correct:[],
+                rate:[]
             },
         }
     },
     methods:{
         fillData () {
             var solved_data = this.values.solved
-            var correct_data = this.values.correct            
+            var correct_data = this.values.correct    
+            var rate_data = this.values.rate          
             var datasets = [
+                /*
                 {
                     label: '回答数',
                     type: 'bar',
@@ -53,6 +56,15 @@ export default {
                     lineTension: 0,
                     yAxisID: "count-axis"
                 }
+                */
+                {
+                    label: '正答率',
+                    type: 'bar',
+                    data: rate_data,
+                    borderColor: "rgba(254,97,132,0.8)",
+                    backgroundColor: "rgba(254,97,132,0.5)",
+                    yAxisID: "count-axis"
+                },
             ]
 
             var labels=[];
@@ -86,12 +98,14 @@ export default {
             for( var i = 0; i < this.values.genre.length; i++){
                 this.values.solved[i] = 0
                 this.values.correct[i] = 0
+                this.values.rate[i] = 0
                 records.forEach((record)=>{
                     if(Number(record.genre)==this.values.genre[i].id){
                         this.values.solved[i] = Number(record.solved)
                         this.values.correct[i] = Number(record.correct)
                     }
-                })                
+                })
+                this.values.rate[i] = this.values.correct[i] / this.values.solved[i] * 100               
             }
             this.fillData()
         },             
