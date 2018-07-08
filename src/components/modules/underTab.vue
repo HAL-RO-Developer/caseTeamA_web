@@ -1,10 +1,10 @@
 <template>
     <section id="undertab"  class="container">
-    <b-tabs type="is-toggle" v-model="IndexModel" @change="change" expanded>
-        <b-tab-item label="登録" icon="google-photos"></b-tab-item>
-        <b-tab-item label="記録" icon="chart-bar"></b-tab-item>
-        <b-tab-item label="設定" icon="settings"></b-tab-item>
-    </b-tabs>
+        <b-tabs type="is-toggle" v-model="IndexModel" @change="change" expanded>
+            <b-tab-item label="登録" icon="google-photos"></b-tab-item>
+            <b-tab-item label="記録" icon="chart-bar"></b-tab-item>
+            <b-tab-item label="設定" icon="settings"></b-tab-item>
+        </b-tabs>
     </section>
 </template>
 
@@ -48,17 +48,26 @@ export default {
 
 
 <style>
-  ＃undertab {
+  #undertab {
     position: relative;
-    padding-bottom: 40px;
   }
-  .b-tabs {
+  
+  .b-tabs{
     position: fixed;
     left: 0;
     bottom: 0;
-    height: 40px;
+    height: 8vh;
   }
-  .b-tabs .tab-content{
-      padding: 0;
+
+  .b-tabs .tabs{
+  }
+
+  .b-tabs .tabs a{
+    font-size: 1.25rem;
+    height: 8vh;
+  }
+
+  .b-tabs .tab-content{ 
+    padding: 0;
   }
 </style>

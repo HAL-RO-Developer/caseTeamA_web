@@ -1,6 +1,7 @@
 .contents{
     position: relative;
     margin-top: 25%;
+    height: 65vh;
     overflow: auto;
 }
 
