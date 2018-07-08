@@ -39,7 +39,6 @@ export default {
         return {
             title: "記録",
             child_id: "",
-            filter: this.$route.params.filter,
             chartData:{},
             options:{},
             records:[],
@@ -111,7 +110,7 @@ export default {
         },
         getRecords(){
             this.isLoading = true
-            http.getRecords(this.child_id,this.filter)
+            http.getRecords(this.child_id,"date")
                 .then((response)=>{
                     console.log(response)
                     var records = response.data.records

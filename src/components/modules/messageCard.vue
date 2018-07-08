@@ -2,7 +2,8 @@
     <b-collapse class="card">
             <div slot="trigger" slot-scope="props" class="card-header">
                 <p class="card-header-title">
-                    {{condition}}
+                    <span v-if="condition==3">{{messageCall}}回</span>
+                    {{target.name}}
                 </p>
                 <a class="card-header-icon">
                     <b-icon
@@ -34,6 +35,7 @@
     export default {
         data() {
             return {
+                target:{},
                 options: {
                     condition:[
                         {id: 1, name: '正解のとき'},
@@ -45,10 +47,15 @@
         },
         methods:{
             edit(){},
-            remove(){
-                this.$emit('remove', this.id )
+            remove(id){
+                this.$emit('remove', id )
             }
         },
-        props:['condition', 'message-call','messages']
+        created() {
+            this.target = this.options.condition.find((item, index)=>{
+                if (item.id == this.condition) return true;
+            });
+        },
+        props:['condition', 'messageCall','messages']
     }
 </script>

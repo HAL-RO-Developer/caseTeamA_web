@@ -6,7 +6,7 @@
             <card v-for="(message, index) in messages.child_messages" 
                 :key="index"
                 :condition="message.condition"
-                :message-call="messages.message_call"
+                :messageCall="message.message_call"
                 :messages="message.messages"
                 @remove="removeMessage"
                 ></card>
