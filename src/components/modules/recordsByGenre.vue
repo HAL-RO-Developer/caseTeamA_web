@@ -33,7 +33,6 @@ export default {
     methods:{
         fillData () {
             var solved_data = this.values.solved
-            //var solved_data = [10,20,30,40]
             var correct_data = this.values.correct            
             var datasets = [
                 {
