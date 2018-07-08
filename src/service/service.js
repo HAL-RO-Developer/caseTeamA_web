@@ -77,6 +77,7 @@ class Http{
         return new Promise((res, rej)=>{
             var response = {
                     data:{
+                        /*
                         records: [
                             {
                                 date: "2018-07-02T13:35:08+09:00",
@@ -120,12 +121,34 @@ class Http{
                             }
 
                         ]
-                        
+                        */
+                        records: [
+                            {
+                                genre: "1",
+                                solved: "10",
+                                correct: "5"
+                            },
+                            {
+                                genre: "2",
+                                solved: "5",
+                                correct: "3"
+                            },
+                            {
+                                genre: "3",
+                                solved: "7",
+                                correct: "7"
+                            },
+                            {
+                                genre: "4",
+                                solved: "15",
+                                correct: "2"
+                            },
+                        ]
                     }
             }
             res(response)
         })
-        
+
     }
     getDetail(child_id, date, genre){
         return  this.api.get('/work/detail/'+child_id,{

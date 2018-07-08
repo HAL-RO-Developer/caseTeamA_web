@@ -8,7 +8,7 @@
                 </b-select>
             </b-field>
             <by-date v-if="filter=='date'" :records="records" :isLoading="isLoading" @isLoading="isLoading=false"></by-date>
-            <by-genre v-if="filter=='genre'" :isLoading="isLoading" @isLoading="isLoading=false"></by-genre>
+            <by-genre v-if="filter=='genre'" :records="records" :isLoading="isLoading" @isLoading="isLoading=false"></by-genre>
         </div>
         <fab :icon="fabIcon" @click="getRecords"></fab>    
         <app-footer></app-footer>

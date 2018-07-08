@@ -19,7 +19,12 @@ export default {
             chartData:{},
             options:{},
             values:{
-                genre:[],
+                genre:[
+                    {id: 1, name: '国語'},
+                    {id: 2, name: '算数'},
+                    {id: 3, name: '理科'},
+                    {id: 4, name: '社会'},
+                ],
                 solved:[],
                 correct:[]
             },
@@ -28,6 +33,7 @@ export default {
     methods:{
         fillData () {
             var solved_data = this.values.solved
+            //var solved_data = [10,20,30,40]
             var correct_data = this.values.correct            
             var datasets = [
                 {
@@ -50,8 +56,13 @@ export default {
                 }
             ]
 
+            var labels=[];
+            this.values.genre.forEach((item)=>{
+                labels.push(item.name)
+            })
+
             this.chartData = {
-                labels: [],
+                labels: labels,
                 datasets: datasets,
             }
 
@@ -63,7 +74,7 @@ export default {
                             position: "left",
                             ticks:{
                                 min: 0,
-                                max: 30,
+                                max: 100,
                             }
                         }
                     ],
@@ -71,7 +82,18 @@ export default {
             }
             this.$emit('isLoading')
         },
-        aggregate(date){
+        aggregate(){
+            var records = this.records
+            for( var i = 0; i < this.values.genre.length; i++){
+                this.values.solved[i] = 0
+                this.values.correct[i] = 0
+                records.forEach((record)=>{
+                    if(Number(record.genre)==this.values.genre[i].id){
+                        this.values.solved[i] = Number(record.solved)
+                        this.values.correct[i] = Number(record.correct)
+                    }
+                })                
+            }
             this.fillData()
         },             
     },
