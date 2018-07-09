@@ -8,7 +8,8 @@ class Http{
 
     Load(){
         this.api = axios.create({
-            baseURL: 'https://caseteamaserver-ipjpkxwtre.now.sh', 
+            //baseURL: localStorage.getItem('server'), 
+            baseURL: 'https://caseteamaserver-lyozxwqhak.now.sh',
             headers: {
               'ContentType': 'application/json',
               'Authorization': this.GetToken()
@@ -66,18 +67,16 @@ class Http{
         return  this.api.delete('/child/'+child_id)
     }
     getRecords(child_id, filter){
-        /*
         return  this.api.get('/work/graph/'+child_id,{
             params:{
                 filter
             }
         })
-        */
-       
+        /*
         return new Promise((res, rej)=>{
             var response = {
                     data:{
-                        /*
+                        
                         records: [
                             {
                                 date: "2018-07-02T13:35:08+09:00",
@@ -121,7 +120,7 @@ class Http{
                             }
 
                         ]
-                        */
+                        /*
                         records: [
                             {
                                 genre: "1",
@@ -148,7 +147,7 @@ class Http{
             }
             res(response)
         })
-
+        */
     }
     getDetail(child_id, date, genre){
         return  this.api.get('/work/detail/'+child_id,{

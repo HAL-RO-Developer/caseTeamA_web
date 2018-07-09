@@ -12,7 +12,7 @@
                 </b-input>
             </section>
             <div class="subtitle is-5">【デバイスリスト】：{{devices.nickname}}</div>
-            <div class="scroll">
+            <div class="list">
                 <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="true"></b-loading>
                 <card v-for="(device, index) in devices.child_devices" 
                     :key="index"
@@ -172,9 +172,9 @@ export default {
     button{
         display: block;
     }
-    .scroll{
+    .list{
         position: relative;
         overflow: auto;
-        height: 200px;
+        height: 43vh;
     }
 </style>

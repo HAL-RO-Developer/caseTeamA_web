@@ -27,9 +27,13 @@ export default {
         bottom: 8vh;
         left:0px;
     }
-    .buttons{
+    #app-footer .buttons{
         display: block;
         position: relative;
-        margin: 3%;
+        height: 10vh;
+    }
+    #app-footer .buttons .button{
+        height: 6vh;
+        margin: 2vh;
     }
 </style>

@@ -29,7 +29,7 @@ export default {
             menu_items: [
                 { id:1, title:'子ども一覧' },
                 { id:2, title:'メッセージ設定' },
-                { id:3, title: '取扱説明書'},
+                { id:3, title:'取扱説明書'},
                 { id:4, title:'ログアウト' }
             ]
         }
