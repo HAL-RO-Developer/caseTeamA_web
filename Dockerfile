@@ -1,24 +1,15 @@
-FROM alpine:3.6
-WORKDIR /root
-ENV GO_ENV production
-
-RUN set -x \
-  && apk upgrade --no-cache \
-  && apk --update add tzdata \
-  && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
-  && apk del tzdata \
-  && rm -rf /var/cache/apk/*
+FROM makki0205/deploy
+WORKDIR C:/Users/showt/go/github.com/HAL-RO-Developer/caseTeamA_web 
 
 
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+ADD ./ ./ 
 
-ADD ./cmd/main .
-ADD ./public ./public
-ADD ./view ./view
-ADD ./config.yml ./config.yml
+RUN ls -la 
 
+RUN go get github.com/gin-gonic/gin
+RUN npm install
+RUN npm run build
 
-EXPOSE 8000
+EXPOSE 3000 
 
-# Run it
-ENTRYPOINT ["./main"]
+ENTRYPOINT ["go","run","main.go"]

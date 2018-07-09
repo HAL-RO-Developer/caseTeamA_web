@@ -19,7 +19,7 @@ export default {
     #app-header{
         display: block;
         position: fixed;
-        width: 100vh;
+        width: 100vw;
         height: 10vh;
         top: 0px;
         left:0px;
