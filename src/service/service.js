@@ -8,8 +8,8 @@ class Http{
 
     Load(){
         this.api = axios.create({
-            //baseURL: localStorage.getItem('server'), 
-            baseURL: 'https://caseteamaserver-lyozxwqhak.now.sh',
+            baseURL: localStorage.getItem('server'), 
+            //baseURL: 'https://caseteamaserver-lyozxwqhak.now.sh',
             headers: {
               'ContentType': 'application/json',
               'Authorization': this.GetToken()

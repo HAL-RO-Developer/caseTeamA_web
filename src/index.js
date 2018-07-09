@@ -10,6 +10,7 @@ import Children from './components/pages/children.vue'
 import Messages from './components/pages/messages.vue'
 import Manual from './components/pages/Manual.vue'
 import NotFound from './components/pages/notFound.vue'
+import Admin from './components/pages/admin.vue'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 
@@ -26,6 +27,7 @@ const routes = [
     { path: "/children", component: Children },
     { path: "/messages", component: Messages },
     { path: "/manual", component: Manual },
+    { path: "/admin", component: Admin},
     { path: "*", component: NotFound },
 ]
 const router = new VueRouter({  mode: 'history', routes })
