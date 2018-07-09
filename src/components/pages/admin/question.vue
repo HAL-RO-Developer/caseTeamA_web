@@ -34,9 +34,9 @@
                 </b-field>
                 <b-field label="正解を選択">
                     <b-select placeholder="正解を選択" v-model="corr" required expanded>
-                        <option value="0">回答1</option>
-                        <option value="1">回答2</option>
-                        <option value="2">回答3</option>
+                        <option value="0">{{data.answer[0].text}}</option>
+                        <option value="1">{{data.answer[1].text}}</option>
+                        <option value="2">{{data.answer[2].text}}</option>
                     </b-select>
                 </b-field>
             </section>
