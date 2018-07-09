@@ -50,6 +50,7 @@ export default {
             localStorage.setItem("server", this.new_server)
             this.now_server = localStorage.getItem("server")
             this.new_server = ""
+            http.Load()
        }
     },
     created(){
