@@ -4,23 +4,51 @@
         <div class="contents">
 
             <section class="modal-card-body" lebel="問題データ">
-                <b-input type="number" placeholder="ドリルID" v-model="data.book_id"></b-input>
-                <b-input type="number" placeholder="問題No" v-model="data.question_no"></b-input>               
-                <b-input type="textarea" maxlength="140" placeholder="問題文" v-model="data.sentence.text"></b-input>
-                <b-input type="text" maxlength="30" placeholder="回答1" v-model="data.answer[0].text"></b-input>
-                <b-input type="text" maxlength="30" placeholder="回答2" v-model="data.answer[1].text"></b-input>
-                <b-input type="text" maxlength="30" placeholder="回答3" v-model="data.answer[2].text"></b-input>
-                <b-select placeholder="Select a genre" v-model="data.genre" expanded>
-                    <option v-for="option in options.genre"
-                        :value="option.id"
-                        :key="option.id">
-                        {{ option.name }}
-                    </option>
-                </b-select>
+                <b-field>
+                    <b-input type="number" placeholder="ドリルID" v-model="data.book_id" required></b-input>
+                </b-field>
+                <b-field>
+                    <b-input type="number" placeholder="問題No" v-model="data.question_no" required></b-input>               
+                </b-field>
+                <b-field>
+                    <b-select placeholder="分野を選択" v-model="data.genre" required>
+                        <option v-for="option in options.genre"
+                            :value="option.id"
+                            :key="option.id">
+                            {{ option.name }}
+                        </option>
+                    </b-select>
+                    <button class="button is-info" type="button" @click="isComponentModalActive = true"><b-icon icon="plus"></b-icon></button>
+                </b-field>
+                <b-field>
+                    <b-input type="textarea" maxlength="140" placeholder="問題文" v-model="data.sentence.text" required></b-input>
+                </b-field>
+                <b-field>
+                    <b-input type="text" maxlength="30" placeholder="回答1" v-model="data.answer[0].text" required></b-input>
+                </b-field>
+                <b-field>       
+                    <b-input type="text" maxlength="30" placeholder="回答2" v-model="data.answer[1].text" required></b-input>
+                </b-field>
+                <b-field>
+                    <b-input type="text" maxlength="30" placeholder="回答3" v-model="data.answer[2].text" required></b-input>
+                </b-field>
+                <b-field label="正解を選択">
+                    <b-select placeholder="正解を選択" v-model="corr" required expanded>
+                        <option value="0">回答1</option>
+                        <option value="1">回答2</option>
+                        <option value="2">回答3</option>
+                    </b-select>
+                </b-field>
             </section>
-            <button class="button is-medium is-primary full-width" type="button" @click="add">追加</button>
+            <button class="button is-medium is-primary full-width" type="button" @click="createQuestion">作成</button>
         </div>
         <app-footer></app-footer>
+        <b-modal :active.sync="isComponentModalActive" has-modal-card>
+            <b-field>
+                <b-input type="text" maxlength="10" placeholder="分野名" v-model="new_genre" required></b-input>
+            </b-field>
+            <button class="button is-primary full-width" type="button" @click="addGenre">分野追加</button>
+        </b-modal>
     </div>
 </template>
 
@@ -48,32 +76,117 @@ export default {
                     text:""             // 本文
                 },
                 answer:[                // 回答
-                    {tag_id: "", text: ""},     // 回答１(タグID, 本文)
-                    {tag_id: "", text: ""},     // 回答２(タグID, 本文)
-                    {tag_id: "", text: ""}      // 回答３(タグID, 本文)
+                    {tag_id: "", text: "", answer: false},     // 回答１(タグID, 本文)
+                    {tag_id: "", text: "", answer: false},     // 回答２(タグID, 本文)
+                    {tag_id: "", text: "", answer: false}      // 回答３(タグID, 本文)
                 ],
                 genre:null              // 分野(id)
             },
+            corr:"",
             options:{
                 genre:[
                     {id: 1, name:"国語"},
                     {id: 2, name:"算数"},
                     {id: 3, name:"雑学"},
                 ]
-            }
+            },
+            isComponentModalActive: false,
+            new_genre:""
         }
     },
     methods:{
-        add(){
-            
+        createQuestion(){
             this.data.sentence.tag_id = "question" + this.data.book_id + "_" + this.data.question_no
-            for( var i = 0; i < this.data.answer.length; i++){
-                this.data.answer[i].tag_id = "answer" + this.data.book_id + "_" + this.data.question_no + "_" + (i+1)
+            for(let i in this.data.answer) {
+                this.data.answer[i].tag_id = "answer" + this.data.book_id + "_" + this.data.question_no + "_" + i
+                if(i==this.corr) this.data.answer[i].answer = true
             }            
-            console.log(this.data)
+            console.log(JSON.stringify(this.data))
+            this.clear()
+            /*
+            http.createQuestion(this.data)
+                .then((response)=>{
+                    this.$toast.open('作成しました')
+                    this.clear()
+                })
+                .catch((err)=>{
+                    if(err){
+                        this.$dialog.alert({
+                            title: 'Error',
+                            message: err.response.data.error,
+                            type: 'is-danger',
+                            hasIcon: true,
+                            icon: 'times-circle',
+                            iconPack: 'fa'
+                        })
+                        this.clear()
+                    }
+                })
+            */
+        },
+        clear(){
+            this.data = {
+                book_id: null,          // ドリルID
+                question_no: null,      // 問題No
+                sentence:{              // 問題文
+                    tag_id:"",          // タグID
+                    text:""             // 本文
+                },
+                answer:[                // 回答
+                    {tag_id: "", text: "", answer: false},     // 回答１(タグID, 本文)
+                    {tag_id: "", text: "", answer: false},     // 回答２(タグID, 本文)
+                    {tag_id: "", text: "", answer: false}      // 回答３(タグID, 本文)
+                ],
+                genre:null              // 分野(id)
+            }
+            this.corr = ""
+        },
+        addGenre(){
+            this.isComponentModalActive = false
+            this.$toast.open(this.new_genre+"を追加しました")
+            /*
+            http.addGenre(this.new_genre)
+                .then((response)=>{
+                    this.$toast.open('追加しました')
+                    this.getGenre()
+                })
+                .catch((err)=>{
+                    if(err){
+                        this.$dialog.alert({
+                            title: 'Error',
+                            message: err.response.data.error,
+                            type: 'is-danger',
+                            hasIcon: true,
+                            icon: 'times-circle',
+                            iconPack: 'fa'
+                        })
+                    }
+                })
+            */
+        },
+        getGenre(){
+            /*
+            http.getGenre(this.new_genre)
+                .then((response)=>{
+                    this.options.genre = response.data.genre
+                })
+                .catch((err)=>{
+                    if(err){
+                        this.$dialog.alert({
+                            title: 'Error',
+                            message: err.response.data.error,
+                            type: 'is-danger',
+                            hasIcon: true,
+                            icon: 'times-circle',
+                            iconPack: 'fa'
+                        })
+                    }
+                })
+            */
         }
     },
     created(){
+        this.getGenre()
     }
 }
 </script>

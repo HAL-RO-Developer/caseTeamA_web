@@ -156,39 +156,6 @@ class Http{
                 genre
             }
         })
-        /*
-        return new Promise((res, rej)=>{
-            var response ={
-                data:{
-                    records: {
-                        date: "2018-07-02T13:35:08+09:00",
-                        genre_name: "",
-                        detail:[
-                            {
-                                sentence: "1+1は？",
-                                user_answer: "2",
-                                correct: "2",
-                                result: true
-                            },
-                            {
-                                sentence: "1+3は？",
-                                user_answer: "3",
-                                correct: "4",
-                                result: false
-                            },
-                            {
-                                sentence: "兵庫県の県庁所在地は？",
-                                user_answer: "兵庫市",
-                                correct: "神戸市",
-                                result: false
-                              }
-                        ]
-                    }
-                }
-            }
-            res(response)
-        })
-        */
     }
     addMessage(child_id, condition, message_call, message ){
         return  this.api.post('/work/message',{
@@ -203,6 +170,19 @@ class Http{
     }
     removeMessage(message_id){
         return  this.api.delete('/work/message/'+message_id)
+    }
+    createQuestion(data){
+        return  this.api.post('/question/create',{
+            data
+        })
+    }
+    addGenre(genre_name){
+        return  this.api.post('/question/genre',{
+            genre_name
+        })
+    }
+    getGenre(){
+        return  this.api.get('/question/genre')
     }
 }
 var http = new Http()
