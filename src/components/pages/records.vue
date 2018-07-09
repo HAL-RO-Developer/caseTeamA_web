@@ -7,8 +7,8 @@
                     <option v-for="option in options.filter" :key="option.value" :value="option.value">{{option.name}}</option>
                 </b-select>
             </b-field>
-            <by-date v-if="filter=='date'" :records="records" :isLoading="isLoading" @isLoading="isLoading=false"></by-date>
-            <by-genre v-if="filter=='genre'" :records="records" :isLoading="isLoading" @isLoading="isLoading=false"></by-genre>
+            <by-date ref="date" v-if="filter=='date'" :records="records" :isLoading="isLoading" @isLoading="isLoading=false"></by-date>
+            <by-genre ref="genre" v-if="filter=='genre'" :records="records" :isLoading="isLoading" @isLoading="isLoading=false"></by-genre>
         </div>
         <fab :icon="fabIcon" @click="getRecords"></fab>    
         <app-footer></app-footer>
@@ -59,6 +59,11 @@ export default {
                     console.log(response)
                     var records = response.data.records
                     this.records = records
+                    if(this.filter=="date"){
+                        this.$refs.date.aggregate()
+                    }else if(filter=="genre"){
+                        this.$refs.genre.aggregate()
+                    }
                 })
                 .catch((err)=>{
                     this.isLoading = false
