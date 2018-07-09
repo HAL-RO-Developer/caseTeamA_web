@@ -99,8 +99,8 @@ export default {
                 this.values.correct[i] = 0
                 records.forEach((record)=>{
                     if( moment(record.date).isSame(m,'day') ){
-                        this.values.solved[i] = Number(record.solved)
-                        this.values.correct[i] = Number(record.correct)
+                        this.values.solved[i] = Number(record.num_ans)
+                        this.values.correct[i] = Number(record.num_corr)
                     }
                 })                
             }
