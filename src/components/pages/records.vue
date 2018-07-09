@@ -61,7 +61,7 @@ export default {
                     this.records = records
                     if(this.filter=="date"){
                         this.$refs.date.aggregate()
-                    }else if(filter=="genre"){
+                    }else if(this.filter=="genre"){
                         this.$refs.genre.aggregate()
                     }
                 })
