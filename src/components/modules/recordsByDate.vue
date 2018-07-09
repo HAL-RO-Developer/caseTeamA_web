@@ -26,6 +26,7 @@ export default {
             child_id: "",
             chartData:{},
             options:{},
+            records:[],
             values:{
                 week:[],
                 week_range:"",
@@ -90,9 +91,9 @@ export default {
             var date = moment(el[0]._model.label,"MM/DD").format("MMDD")
             this.$router.push({path: '/records/date/' + date})
         },
-        aggregate(date){
+        aggregate(records,date){
+            this.records = records
             var m = moment(date).day(1)
-            var records = this.records
             for( var i = 0; i < 7; i++, m.add(1,"day") ){
                 this.values.week[i] = m.format('MM/DD')
                 this.values.solved[i] = 0
@@ -108,20 +109,21 @@ export default {
             this.fillData()
         },
         prev(){
-            this.aggregate(moment(this.values.week[0],'MM/DD').add(-7,'day').toDate())
+            this.aggregate(this.records,moment(this.values.week[0],'MM/DD').add(-7,'day').toDate())
         },
         next(){
             var date = moment(this.values.week[0],'MM/DD').add(7,'day')
             if(date.isBefore(moment())){
-                this.aggregate(date.toDate())
-            }  
+                this.aggregate(this.records,date.toDate())
+            }
         },
     },
     created() {
         this.child_id = localStorage.getItem('child_id')
-        this.aggregate()
+        //this.aggregate()
     },
-    props: ['records',"isLoading"]
+    
+    props: ["isLoading"]
 }
 </script>
 

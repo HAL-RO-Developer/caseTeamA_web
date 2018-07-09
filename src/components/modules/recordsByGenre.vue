@@ -93,8 +93,8 @@ export default {
             }
             this.$emit('isLoading')
         },
-        aggregate(){
-            var records = this.records
+        aggregate(records){
+            this.records = this.records
             for( var i = 0; i < this.values.genre.length; i++){
                 this.values.solved[i] = 0
                 this.values.correct[i] = 0
@@ -114,7 +114,7 @@ export default {
         this.child_id = localStorage.getItem('child_id')
         this.aggregate()
     },
-    props: ['records',"isLoading"]
+    props: ["isLoading"]
 }
 </script>
 
