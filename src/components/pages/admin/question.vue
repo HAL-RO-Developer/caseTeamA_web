@@ -85,9 +85,11 @@ export default {
             corr:"",
             options:{
                 genre:[
+                    /*
                     {genre_id: 1, genre_name:"国語"},
                     {genre_id: 2, genre_name:"算数"},
                     {genre_id: 3, genre_:"雑学"},
+                    */
                 ]
             },
             isComponentModalActive: false,
@@ -102,8 +104,7 @@ export default {
                 if(i==this.corr) this.data.answer[i].answer = true
             }            
             console.log(JSON.stringify(this.data))
-            this.clear()
-            /*
+            //this.clear()
             http.createQuestion(this.data)
                 .then((response)=>{
                     this.$toast.open('作成しました')
@@ -122,7 +123,6 @@ export default {
                         this.clear()
                     }
                 })
-            */
         },
         clear(){
             this.data = {
@@ -142,12 +142,11 @@ export default {
             this.corr = ""
         },
         addGenre(){
-            this.isComponentModalActive = false
-            this.$toast.open(this.new_genre+"を追加しました")
-            /*
+            this.isComponentModalActive = false 
             http.addGenre(this.new_genre)
                 .then((response)=>{
-                    this.$toast.open('追加しました')
+                    this.$toast.open("【" + this.new_genre + "】を追加しました")
+            
                     this.getGenre()
                 })
                 .catch((err)=>{
@@ -162,10 +161,8 @@ export default {
                         })
                     }
                 })
-            */
         },
         getGenre(){
-            /*
             http.getGenre(this.new_genre)
                 .then((response)=>{
                     this.options.genre = response.data.genre
@@ -182,7 +179,6 @@ export default {
                         })
                     }
                 })
-            */
         }
     },
     created(){
