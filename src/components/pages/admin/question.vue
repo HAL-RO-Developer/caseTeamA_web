@@ -13,9 +13,9 @@
                 <b-field>
                     <b-select placeholder="分野を選択" v-model="data.genre" required>
                         <option v-for="option in options.genre"
-                            :value="option.id"
-                            :key="option.id">
-                            {{ option.name }}
+                            :value="option.genre_id"
+                            :key="option.genre_id">
+                            {{ option.genre_name }}
                         </option>
                     </b-select>
                     <button class="button is-info" type="button" @click="isComponentModalActive = true"><b-icon icon="plus"></b-icon></button>
@@ -85,9 +85,9 @@ export default {
             corr:"",
             options:{
                 genre:[
-                    {id: 1, name:"国語"},
-                    {id: 2, name:"算数"},
-                    {id: 3, name:"雑学"},
+                    {genre_id: 1, genre_name:"国語"},
+                    {genre_id: 2, genre_name:"算数"},
+                    {genre_id: 3, genre_:"雑学"},
                 ]
             },
             isComponentModalActive: false,
